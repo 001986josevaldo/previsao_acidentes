@@ -33,7 +33,7 @@ que uma característica da via cause acidentes nem que uma intervenção especí
 reduzir acidentes. A decisão final precisa incorporar contexto, volume de tráfego,
 severidade, custos, equidade e avaliação de profissionais de segurança viária.
 
-Dados e unidade de análise 
+Dados e unidade de análise
 Cada linha representa um trecho ( ID ) em um ano ( Ano ). O conjunto fornecido tem 577 IDs
 em cada um dos cinco anos e nenhum par ID – Ano duplicado. A auditoria do notebook
 não identificou valores ausentes; as características da via não variam entre anos para o
@@ -61,17 +61,18 @@ de contagens, zeros, sobredispersão e estabilidade das características por tre
 visualizações da distribuição de acidentes e uma representação de frequências por ano.
 
 Modelos comparados
+
 1. Baseline por taxa/km: taxa média de acidentes por quilômetro estimada no treino,
-multiplicada pelo comprimento do trecho de teste.
+   multiplicada pelo comprimento do trecho de teste.
 2. Poisson regularizado: GLM de Poisson com ligação log, tendência linear de ano, offset
-de exposição aproximada e regularização L2 ( alpha=0.01 ). O valor de regularização é um
-ponto inicial; idealmente deve ser selecionado por validação interna, sem consultar
-2025.
-3. Binomial negativa (NB2): modelo de contagem com parâmetro de dispersão estimado
-por máxima verossimilhança, mesma fórmula e offset.ID não é usado como preditor. Como as características são praticamente estáticas por
-trecho e há medidas repetidas por ID, a dependência longitudinal deve ser tratada em uma
-próxima versão com estrutura apropriada — por exemplo, GEE, modelo misto ou erros de
-inferência agrupados por trecho.
+   de exposição aproximada e regularização L2 ( alpha=0.01 ). O valor de regularização é um
+   ponto inicial; idealmente deve ser selecionado por validação interna, sem consultar
+3. 
+4. Binomial negativa (NB2): modelo de contagem com parâmetro de dispersão estimado
+   por máxima verossimilhança, mesma fórmula e offset.ID não é usado como preditor. Como as características são praticamente estáticas por
+   trecho e há medidas repetidas por ID, a dependência longitudinal deve ser tratada em uma
+   próxima versão com estrutura apropriada — por exemplo, GEE, modelo misto ou erros de
+   inferência agrupados por trecho.
 
 Validação
 O modelo é ajustado com 2021–2024 e avaliado em 2025. Esse corte imita a previsão do ano
@@ -83,7 +84,7 @@ recomenda-se também validação temporal de origem móvel (rolling-origin).
 
 Resultados preliminares
 Valores calculados no notebook para o conjunto de teste de 2025, usando a base original:
-!(/media/josevaldo/E02A-3159/MESTRADO/previsao_acidentes/figures/image.png)
+![R](figures/metricas_modelos_2025.png)
 
 Em 2025, foram observados 313 acidentes no conjunto de teste. Os totais previstos foram
 aproximadamente 354,2 pelo baseline, 301,0 pelo Poisson e 307,8 pela binomial negativa.
@@ -92,6 +93,8 @@ binomial negativa obteve MAE ligeiramente menor; o Poisson obteve RMSE, R² e de
 Poisson ligeiramente melhores. As diferenças são pequenas e o R² é modesto. Não há base
 para declarar um vencedor universal: a escolha depende da função de custo e precisa ser
 confirmada em validações adicionais.
+
+<img alt="Resultados preliminares" src="figures/comparacao_modelos_2025.png" width="700">
 
 Limite importante do ajuste NB
 O resumo do ajuste reportou convergência, mas também um aviso de falha na inversão da
